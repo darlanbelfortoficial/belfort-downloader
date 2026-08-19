@@ -1,5 +1,7 @@
 <!doctype html>
+
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,30 +10,48 @@
 
   <link rel="icon" href="/static/favicon.svg">
   <link rel="stylesheet" href="/static/style.css">
+
+  <!--
+    O defer garante que o HTML seja carregado antes
+    do JavaScript executar.
+  -->
+
+  <script src="/static/app.js" defer></script>
+
 </head>
 
 <body>
 
 <header>
-  <div class="brand">
-    <b>B</b>
 
-    <span>
-      <strong>BELFORT</strong>
-      <small>DOWNLOADER</small>
-    </span>
+  <div class="brand">
+
+```
+<b>B</b>
+
+<span>
+  <strong>BELFORT</strong>
+  <small>DOWNLOADER</small>
+</span>
+```
+
   </div>
 
-  <button
-    id="theme"
-    class="icon-btn"
-    title="Alternar tema"
-    type="button"
-  >
-    ☀️
-  </button>
-</header>
+<button
+id="theme"
+class="icon-btn"
+title="Alternar tema"
+type="button"
 
+>
+
+```
+☀️
+```
+
+  </button>
+
+</header>
 
 <main>
 
@@ -41,21 +61,22 @@
 
   <section class="hero">
 
-    <div class="eyebrow">
-      DOWNLOAD CENTER
-    </div>
+```
+<div class="eyebrow">
+  DOWNLOAD CENTER
+</div>
 
-    <h1>
-      Seu conteúdo. Sua qualidade.
-    </h1>
+<h1>
+  Seu conteúdo. Sua qualidade.
+</h1>
 
-    <p>
-      Baixe vídeos ou áudio com controle de qualidade,
-      formato e processamento inteligente.
-    </p>
+<p>
+  Baixe vídeos ou áudio com controle de qualidade,
+  formato e processamento inteligente.
+</p>
+```
 
   </section>
-
 
   <!-- =========================================================
        01 - ORIGEM
@@ -63,121 +84,117 @@
 
   <section class="card">
 
-    <div class="section-title">
+```
+<div class="section-title">
 
-      <span class="step">
-        01
-      </span>
+  <span class="step">
+    01
+  </span>
 
-      <div>
-        <small>ORIGEM</small>
+  <div>
 
-        <h2>
-          Link do YouTube
-        </h2>
-      </div>
+    <small>ORIGEM</small>
 
-    </div>
+    <h2>
+      Link do YouTube
+    </h2>
+
+  </div>
+
+</div>
 
 
-    <label for="url">
-      URL
+<label for="url">
+  URL
+</label>
+
+
+<div class="row">
+
+  <input
+    id="url"
+    type="url"
+    autocomplete="off"
+    spellcheck="false"
+    placeholder="https://www.youtube.com/watch?v=..."
+  >
+
+  <button
+    id="paste"
+    class="secondary"
+    type="button"
+  >
+    Colar
+  </button>
+
+</div>
+
+
+<div class="grid">
+
+  <!-- CONTEÚDO -->
+
+  <div>
+
+    <label for="mode">
+      Conteúdo
     </label>
 
+    <select id="mode">
 
-    <div class="row">
+      <option value="single">
+        Somente este vídeo
+      </option>
 
-      <input
-        id="url"
-        type="url"
-        autocomplete="off"
-        spellcheck="false"
-        placeholder="https://www.youtube.com/watch?v=..."
-      >
+      <option value="playlist">
+        Playlist / mix
+      </option>
 
-      <button
-        id="paste"
-        class="secondary"
-        type="button"
-      >
-        Colar
-      </button>
+    </select>
 
-    </div>
+  </div>
 
 
-    <div class="grid">
+  <!-- FORMATO -->
 
-      <!-- CONTEÚDO -->
+  <div>
 
-      <div>
+    <label for="media">
+      Formato
+    </label>
 
-        <label for="mode">
-          Conteúdo
-        </label>
+    <select id="media">
 
-        <select id="mode">
+      <option value="video">
+        Vídeo MP4
+      </option>
 
-          <option value="single">
-            Somente este vídeo
-          </option>
+      <option value="audio">
+        Áudio MP3
+      </option>
 
-          <option value="playlist">
-            Playlist / mix
-          </option>
+    </select>
 
-        </select>
-
-      </div>
+  </div>
 
 
-      <!-- FORMATO -->
+  <!-- QUALIDADE -->
 
-      <div>
+  <div>
 
-        <label for="media">
-          Formato
-        </label>
+    <label for="quality">
+      Qualidade
+    </label>
 
-        <select id="media">
+    <select id="quality">
+    </select>
 
-          <option value="video">
-            Vídeo MP4
-          </option>
+  </div>
 
-          <option value="audio">
-            Áudio MP3
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <!-- QUALIDADE -->
-
-      <div>
-
-        <label for="quality">
-          Qualidade
-        </label>
-
-        <select id="quality">
-
-          <!--
-            O JavaScript poderá substituir
-            estas opções conforme o formato.
-          -->
-
-        </select>
-
-      </div>
-
-    </div>
+</div>
+```
 
   </section>
-
-
 
   <!-- =========================================================
        02 - DESTINO
@@ -188,93 +205,84 @@
     class="card"
   >
 
-    <div class="section-title">
+```
+<div class="section-title">
 
-      <span class="step">
-        02
-      </span>
+  <span class="step">
+    02
+  </span>
 
-      <div>
+  <div>
 
-        <small>DESTINO</small>
+    <small>DESTINO</small>
 
-        <h2>
-          Onde salvar?
-        </h2>
+    <h2>
+      Onde salvar?
+    </h2>
 
-      </div>
+  </div>
 
-    </div>
-
-
-    <!--
-      LOCALMENTE:
-      o usuário pode escolher uma pasta.
-
-      NO RENDER:
-      o arquivo será entregue automaticamente
-      para download pelo navegador.
-    -->
-
-    <div id="localDestination">
-
-      <label for="dest">
-        Pasta de destino
-      </label>
-
-      <div class="row">
-
-        <input
-          id="dest"
-          autocomplete="off"
-          placeholder="/home/usuario/Vídeos/Belfort Downloader"
-        >
-
-        <button
-          id="choose"
-          class="secondary"
-          type="button"
-        >
-          Escolher pasta
-        </button>
-
-        <button
-          id="default"
-          class="ghost"
-          type="button"
-        >
-          Padrão
-        </button>
-
-      </div>
-
-      <p class="hint">
-        No Linux, o botão abre o seletor nativo do KDE/GTK quando disponível.
-      </p>
-
-    </div>
+</div>
 
 
-    <!--
-      MENSAGEM EXIBIDA NO RENDER
-    -->
+<!-- DESTINO LOCAL -->
 
-    <div
-      id="renderDestination"
-      class="hidden"
+<div id="localDestination">
+
+  <label for="dest">
+    Pasta de destino
+  </label>
+
+  <div class="row">
+
+    <input
+      id="dest"
+      autocomplete="off"
+      placeholder="/home/usuario/Vídeos/Belfort Downloader"
     >
 
-      <p class="hint">
-        ☁️ O arquivo será processado no servidor e,
-        quando terminar, ficará disponível para download
-        diretamente pelo seu navegador.
-      </p>
+    <button
+      id="choose"
+      class="secondary"
+      type="button"
+    >
+      Escolher pasta
+    </button>
 
-    </div>
+    <button
+      id="default"
+      class="ghost"
+      type="button"
+    >
+      Padrão
+    </button>
+
+  </div>
+
+  <p class="hint">
+    No Linux, o botão abre o seletor nativo do KDE/GTK quando disponível.
+  </p>
+
+</div>
+
+
+<!-- DESTINO RENDER -->
+
+<div
+  id="renderDestination"
+  class="hidden"
+>
+
+  <p class="hint">
+    ☁️ O arquivo será processado no servidor e,
+    quando terminar, ficará disponível para download
+    diretamente pelo seu navegador.
+  </p>
+
+</div>
+```
 
   </section>
-
-
 
   <!-- =========================================================
        03 - CONEXÃO
@@ -285,138 +293,133 @@
     class="card"
   >
 
-    <div class="section-title">
+```
+<div class="section-title">
 
-      <span class="step">
-        03
-      </span>
+  <span class="step">
+    03
+  </span>
 
-      <div>
+  <div>
 
-        <small>CONEXÃO</small>
+    <small>CONEXÃO</small>
 
-        <h2>
-          Opções de acesso
-        </h2>
+    <h2>
+      Opções de acesso
+    </h2>
 
-      </div>
+  </div>
 
-    </div>
-
-
-    <!--
-      Essa opção funciona apenas quando o programa
-      está rodando localmente.
-
-      No Render o servidor não consegue acessar
-      os cookies do navegador do usuário.
-    -->
-
-    <div id="browserOption">
-
-      <label class="check">
-
-        <input
-          type="checkbox"
-          id="useBrowser"
-        >
-
-        <span>
-          Usar sessão do navegador
-        </span>
-
-      </label>
+</div>
 
 
-      <div
-        id="browserWrap"
-        class="browser-wrap hidden"
-      >
+<!-- OPÇÃO DE NAVEGADOR -->
 
-        <label for="browser">
-          Navegador
-        </label>
+<div id="browserOption">
 
-        <select id="browser">
+  <label class="check">
 
-          <option value="chrome">
-            Chrome
-          </option>
-
-          <option value="chromium">
-            Chromium
-          </option>
-
-          <option value="firefox">
-            Firefox
-          </option>
-
-          <option value="brave">
-            Brave
-          </option>
-
-          <option value="edge">
-            Edge
-          </option>
-
-        </select>
-
-
-        <p class="hint">
-
-          Os cookies são utilizados somente
-          quando o BELFORT DOWNLOADER está rodando
-          localmente no seu computador.
-
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- Mensagem para Render -->
-
-    <div
-      id="renderConnection"
-      class="hidden"
+    <input
+      type="checkbox"
+      id="useBrowser"
     >
 
-      <p class="hint">
+    <span>
+      Usar sessão do navegador
+    </span>
 
-        ☁️ Modo servidor ativo.
-        O download será processado pelo BELFORT DOWNLOADER
-        no Render.
+  </label>
 
-      </p>
 
-    </div>
+  <div
+    id="browserWrap"
+    class="browser-wrap hidden"
+  >
+
+    <label for="browser">
+      Navegador
+    </label>
+
+    <select id="browser">
+
+      <option value="chrome">
+        Chrome
+      </option>
+
+      <option value="chromium">
+        Chromium
+      </option>
+
+      <option value="firefox">
+        Firefox
+      </option>
+
+      <option value="brave">
+        Brave
+      </option>
+
+      <option value="edge">
+        Edge
+      </option>
+
+    </select>
+
+
+    <p class="hint">
+
+      Os cookies são utilizados somente
+      quando o BELFORT DOWNLOADER está rodando
+      localmente no seu computador.
+
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- MENSAGEM RENDER -->
+
+<div
+  id="renderConnection"
+  class="hidden"
+>
+
+  <p class="hint">
+
+    ☁️ Modo servidor ativo.
+    O download será processado pelo BELFORT DOWNLOADER
+    no Render.
+
+  </p>
+
+</div>
+```
 
   </section>
-
-
 
   <!-- =========================================================
        BOTÃO PRINCIPAL
   ========================================================== -->
 
-  <button
-    id="download"
-    class="primary"
-    type="button"
-  >
+<button
+id="download"
+class="primary"
+type="button"
 
-    <span id="downloadIcon">
-      ⬇
-    </span>
+>
 
-    <span id="downloadText">
-      Iniciar download
-    </span>
+```
+<span id="downloadIcon">
+  ⬇
+</span>
+
+<span id="downloadText">
+  Iniciar download
+</span>
+```
 
   </button>
-
-
 
   <!-- =========================================================
        STATUS DO DOWNLOAD
@@ -427,114 +430,114 @@
     class="card hidden"
   >
 
-    <div class="head">
+```
+<div class="head">
 
-      <div>
+  <div>
 
-        <small>
-          DOWNLOAD
-        </small>
+    <small>
+      DOWNLOAD
+    </small>
 
-        <h2 id="state">
-          Preparando...
-        </h2>
+    <h2 id="state">
+      Preparando...
+    </h2>
 
-      </div>
+  </div>
 
-      <strong id="percent">
-        0%
-      </strong>
+  <strong id="percent">
+    0%
+  </strong>
 
-    </div>
-
-
-    <!-- BARRA -->
-
-    <div class="track">
-
-      <div
-        id="bar"
-        style="width:0%"
-      ></div>
-
-    </div>
+</div>
 
 
-    <!-- ESTATÍSTICAS -->
+<!-- BARRA -->
 
-    <div class="stats">
+<div class="track">
 
-      <div>
-        Velocidade
+  <div
+    id="bar"
+    style="width:0%"
+  ></div>
 
-        <strong id="speed">
-          --
-        </strong>
-      </div>
-
-
-      <div>
-        ETA
-
-        <strong id="eta">
-          --
-        </strong>
-      </div>
+</div>
 
 
-      <div>
-        Arquivo
+<!-- ESTATÍSTICAS -->
 
-        <strong id="file">
-          --
-        </strong>
-      </div>
+<div class="stats">
 
-    </div>
+  <div>
+    Velocidade
 
-
-    <p id="msg"></p>
-
-
-    <!-- =======================================================
-         ÁREA DE CONCLUSÃO
-    ======================================================== -->
-
-    <div
-      id="completedArea"
-      class="hidden"
-    >
-
-      <button
-        id="downloadFile"
-        class="primary"
-        type="button"
-      >
-        ⬇ Baixar arquivo
-      </button>
-
-    </div>
+    <strong id="speed">
+      --
+    </strong>
+  </div>
 
 
-    <!-- =======================================================
-         ERRO
-    ======================================================== -->
+  <div>
+    ETA
 
-    <div
-      id="errorArea"
-      class="hidden"
-    >
+    <strong id="eta">
+      --
+    </strong>
+  </div>
 
-      <p
-        id="errorMessage"
-        class="error"
-      ></p>
 
-    </div>
+  <div>
+    Arquivo
+
+    <strong id="file">
+      --
+    </strong>
+  </div>
+
+</div>
+
+
+<p id="msg"></p>
+
+
+<!-- =======================================================
+     CONCLUSÃO
+======================================================== -->
+
+<div
+  id="completedArea"
+  class="hidden"
+>
+
+  <button
+    id="downloadFile"
+    class="primary"
+    type="button"
+  >
+    ⬇ Baixar arquivo
+  </button>
+
+</div>
+
+
+<!-- =======================================================
+     ERRO
+======================================================== -->
+
+<div
+  id="errorArea"
+  class="hidden"
+>
+
+  <p
+    id="errorMessage"
+    class="error"
+  ></p>
+
+</div>
+```
 
   </section>
-
-
 
   <!-- =========================================================
        RECURSOS
@@ -542,52 +545,46 @@
 
   <div class="features">
 
-    <div>
-      ⚡
-      <span>
-        Progresso em tempo real
-      </span>
-    </div>
+```
+<div>
+  ⚡
+  <span>
+    Progresso em tempo real
+  </span>
+</div>
 
 
-    <div>
-      🎬
-      <span>
-        Até 4K quando disponível
-      </span>
-    </div>
+<div>
+  🎬
+  <span>
+    Até 4K quando disponível
+  </span>
+</div>
 
 
-    <div>
-      🎵
-      <span>
-        MP3 128–320 kbps
-      </span>
-    </div>
+<div>
+  🎵
+  <span>
+    MP3 128–320 kbps
+  </span>
+</div>
 
 
-    <div>
-      ☁️
-      <span>
-        Download pelo navegador
-      </span>
-    </div>
+<div>
+  ☁️
+  <span>
+    Download pelo navegador
+  </span>
+</div>
+```
 
   </div>
 
 </main>
 
-
-<!-- ===========================================================
-     JAVASCRIPT
-=========================================================== -->
-
-<script src="/static/app.js"></script>
-
-
-<!-- ===========================================================
-     PEQUENO CONTROLE DO MODO RENDER
-=========================================================== -->
+<!-- =========================================================
+     DETECÇÃO DO RENDER
+========================================================== -->
 
 <script>
 
@@ -595,31 +592,10 @@
 
   try {
 
-    /*
-     * O endpoint /api/health existe no app.py.
-     * Tentamos descobrir se estamos rodando no Render.
-     */
-
-    const response = await fetch("/api/health", {
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-      return;
-    }
-
-    const data = await response.json();
-
-    /*
-     * Render normalmente disponibiliza
-     * a variável de ambiente RENDER no servidor.
-     *
-     * Como essa variável não é enviada ao navegador,
-     * usamos também o hostname.
-     */
-
     const isRender =
-      window.location.hostname.endsWith(".onrender.com");
+      window.location.hostname.endsWith(
+        ".onrender.com"
+      );
 
 
     if (!isRender) {
@@ -627,23 +603,29 @@
     }
 
 
-    /* ========================================================
-       MODO RENDER
-    ========================================================= */
-
+    /*
+     * Modo Render
+     */
 
     const localDestination =
-      document.getElementById("localDestination");
+      document.getElementById(
+        "localDestination"
+      );
 
     const renderDestination =
-      document.getElementById("renderDestination");
-
+      document.getElementById(
+        "renderDestination"
+      );
 
     const browserOption =
-      document.getElementById("browserOption");
+      document.getElementById(
+        "browserOption"
+      );
 
     const renderConnection =
-      document.getElementById("renderConnection");
+      document.getElementById(
+        "renderConnection"
+      );
 
 
     /*
@@ -651,54 +633,70 @@
      */
 
     if (localDestination) {
-      localDestination.classList.add("hidden");
+
+      localDestination.classList.add(
+        "hidden"
+      );
+
     }
 
 
     /*
-     * Mostra mensagem de download pelo navegador.
+     * Mostra destino pelo navegador.
      */
 
     if (renderDestination) {
-      renderDestination.classList.remove("hidden");
+
+      renderDestination.classList.remove(
+        "hidden"
+      );
+
     }
 
 
     /*
-     * Esconde cookies do navegador.
+     * Esconde sessão do navegador.
      */
 
     if (browserOption) {
-      browserOption.classList.add("hidden");
+
+      browserOption.classList.add(
+        "hidden"
+      );
+
     }
 
 
     /*
-     * Mostra mensagem de modo servidor.
+     * Mostra modo servidor.
      */
 
     if (renderConnection) {
-      renderConnection.classList.remove("hidden");
+
+      renderConnection.classList.remove(
+        "hidden"
+      );
+
     }
 
 
     /*
-     * Não precisamos enviar uma pasta local
-     * para o servidor.
+     * Limpa destino local.
      */
 
     const dest =
       document.getElementById("dest");
 
     if (dest) {
-      dest.value = "";
-    }
 
+      dest.value = "";
+
+    }
 
   } catch (error) {
 
     console.warn(
-      "Não foi possível detectar o ambiente:",
+      "Erro ao detectar ambiente:",
       error
     );
 
