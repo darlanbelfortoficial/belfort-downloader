@@ -30,3 +30,37 @@ RUN mkdir -p /app/downloads
 EXPOSE 10000
 
 CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--workers", "1", "--threads", "4", "--timeout", "600", "app:app"]
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_NO_CACHE_DIR=1
+
+# FFmpeg + ferramentas necessárias
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ffmpeg \
+        curl \
+        ca-certificates \
+        unzip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Deno — usado pelo yt-dlp para processamento JavaScript
+RUN curl -fsSL https://deno.land/install.sh | sh
+
+ENV PATH="/root/.deno/bin:${PATH}"
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+COPY . .
+
+RUN mkdir -p /app/downloads
+
+EXPOSE 10000
+
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--workers", "1", "--threads", "4", "--timeout", "300", "app:app"]
