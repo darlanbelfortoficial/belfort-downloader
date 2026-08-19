@@ -147,25 +147,26 @@ def find_program(name):
 def prepare_cookies():
 
     """
-    Permite fornecer cookies do YouTube pelo Render
-    através da variável de ambiente:
+    Permite fornecer cookies do YouTube através do Render.
+
+    Variáveis aceitas:
 
         YOUTUBE_COOKIES
 
-    A variável deve conter o conteúdo de um arquivo
-    cookies.txt no formato Netscape.
-
-    Também aceita:
+    ou:
 
         YOUTUBE_COOKIES_B64
 
-    contendo o arquivo codificado em Base64.
+    O conteúdo deve ser um cookies.txt
+    no formato Netscape.
     """
 
-    cookies_path = Path("/tmp/youtube-cookies.txt")
+    cookies_path = Path(
+        "/tmp/youtube-cookies.txt"
+    )
 
     # --------------------------------------------------------
-    # ARQUIVO JÁ EXISTENTE
+    # ARQUIVO EXISTENTE
     # --------------------------------------------------------
 
     if cookies_path.exists():
@@ -182,12 +183,18 @@ def prepare_cookies():
 
     if cookies:
 
-        cookies_path.write_text(
-            cookies,
-            encoding="utf-8"
-        )
+        try:
 
-        return str(cookies_path)
+            cookies_path.write_text(
+                cookies,
+                encoding="utf-8"
+            )
+
+            return str(cookies_path)
+
+        except Exception:
+
+            return None
 
     # --------------------------------------------------------
     # COOKIES EM BASE64
@@ -230,7 +237,10 @@ def resolve_destination(value):
 
     if os.environ.get("RENDER"):
 
-        path = DOWNLOAD_ROOT / uuid.uuid4().hex
+        path = (
+            DOWNLOAD_ROOT
+            / uuid.uuid4().hex
+        )
 
         path.mkdir(
             parents=True,
@@ -243,7 +253,9 @@ def resolve_destination(value):
     # LOCAL
     # --------------------------------------------------------
 
-    value = (value or "").strip()
+    value = (
+        value or ""
+    ).strip()
 
     if not value:
 
@@ -259,7 +271,10 @@ def resolve_destination(value):
 
     if not path.is_absolute():
 
-        path = DOWNLOAD_ROOT / path
+        path = (
+            DOWNLOAD_ROOT
+            / path
+        )
 
     path.mkdir(
         parents=True,
@@ -276,7 +291,10 @@ def resolve_destination(value):
 def choose_folder_native(initial=""):
 
     initial = (
-        str(Path(initial).expanduser())
+        str(
+            Path(initial)
+            .expanduser()
+        )
         if initial
         else str(Path.home())
     )
@@ -285,7 +303,9 @@ def choose_folder_native(initial=""):
     # KDE
     # --------------------------------------------------------
 
-    kdialog = find_program("kdialog")
+    kdialog = find_program(
+        "kdialog"
+    )
 
     if kdialog:
 
@@ -305,7 +325,9 @@ def choose_folder_native(initial=""):
 
             if result.returncode == 0:
 
-                selected = result.stdout.strip()
+                selected = (
+                    result.stdout.strip()
+                )
 
                 if selected:
                     return selected
@@ -317,7 +339,9 @@ def choose_folder_native(initial=""):
     # ZENITY
     # --------------------------------------------------------
 
-    zenity = find_program("zenity")
+    zenity = find_program(
+        "zenity"
+    )
 
     if zenity:
 
@@ -337,7 +361,9 @@ def choose_folder_native(initial=""):
 
             if result.returncode == 0:
 
-                selected = result.stdout.strip()
+                selected = (
+                    result.stdout.strip()
+                )
 
                 if selected:
                     return selected
@@ -385,13 +411,17 @@ def progress_hook(job_id):
 
     def hook(data):
 
-        status = data.get("status")
+        status = data.get(
+            "status"
+        )
 
         if status == "downloading":
 
             total = (
                 data.get("total_bytes")
-                or data.get("total_bytes_estimate")
+                or data.get(
+                    "total_bytes_estimate"
+                )
                 or 0
             )
 
@@ -406,9 +436,13 @@ def progress_hook(job_id):
                 else 0
             )
 
-            speed = data.get("speed")
+            speed = data.get(
+                "speed"
+            )
 
-            eta = data.get("eta")
+            eta = data.get(
+                "eta"
+            )
 
             filename = os.path.basename(
                 data.get(
@@ -429,7 +463,9 @@ def progress_hook(job_id):
                 ),
 
                 speed=(
-                    yt_dlp.utils.format_bytes(speed)
+                    yt_dlp.utils.format_bytes(
+                        speed
+                    )
                     + "/s"
                     if speed
                     else "--"
@@ -480,34 +516,46 @@ def progress_hook(job_id):
 # SELETOR DE FORMATO
 # ============================================================
 
-def format_selector(media, quality):
+def format_selector(
+    media,
+    quality
+):
 
     if media == "audio":
 
-        return "bestaudio/best"
+        return (
+            "bestaudio/best"
+        )
 
     if quality == "best":
 
         return (
-            "bestvideo[ext=mp4]+bestaudio[ext=m4a]/"
-            "bestvideo[ext=mp4]+bestaudio/"
+            "bestvideo[ext=mp4]+"
+            "bestaudio[ext=m4a]/"
+            "bestvideo[ext=mp4]+"
+            "bestaudio/"
             "bestvideo+bestaudio/"
             "best"
         )
 
-    height = int(quality)
+    height = int(
+        quality
+    )
 
     return (
-        f"bestvideo[ext=mp4][height<={height}]+"
+        f"bestvideo[ext=mp4]"
+        f"[height<={height}]+"
         f"bestaudio[ext=m4a]/"
 
-        f"bestvideo[ext=mp4][height<={height}]+"
+        f"bestvideo[ext=mp4]"
+        f"[height<={height}]+"
         f"bestaudio/"
 
         f"bestvideo[height<={height}]+"
         f"bestaudio/"
 
-        f"best[ext=mp4][height<={height}]/"
+        f"best[ext=mp4]"
+        f"[height<={height}]/"
 
         f"best[height<={height}]/"
 
@@ -519,21 +567,32 @@ def format_selector(media, quality):
 # NORMALIZA URL
 # ============================================================
 
-def normalize_url(url, mode):
+def normalize_url(
+    url,
+    mode
+):
 
-    url = (url or "").strip()
+    url = (
+        url or ""
+    ).strip()
 
     if mode != "single":
+
         return url
 
-    parsed = urlparse(url)
+    parsed = urlparse(
+        url
+    )
 
     query = parse_qs(
         parsed.query,
         keep_blank_values=True
     )
 
-    if "v" in query and query["v"]:
+    if (
+        "v" in query
+        and query["v"]
+    ):
 
         video_id = query["v"][0]
 
@@ -544,14 +603,17 @@ def normalize_url(url, mode):
                 parsed.path,
                 parsed.params,
                 urlencode(
-                    {"v": video_id}
+                    {
+                        "v": video_id
+                    }
                 ),
                 ""
             )
         )
 
     if (
-        "youtu.be" in parsed.netloc
+        "youtu.be"
+        in parsed.netloc
         and parsed.path.strip("/")
     ):
 
@@ -572,9 +634,10 @@ def normalize_url(url, mode):
     ):
 
         raise ValueError(
-            "Você escolheu 'Somente este vídeo', "
-            "mas a URL não identifica um vídeo. "
-            "Envie o link direto do vídeo."
+            "Você escolheu "
+            "'Somente este vídeo', "
+            "mas a URL não identifica "
+            "um vídeo."
         )
 
     return url
@@ -584,16 +647,13 @@ def normalize_url(url, mode):
 # CLIENTES YOUTUBE
 # ============================================================
 
-def client_plan(browser):
+def client_plan():
 
     """
-    Ordem pensada para execução no servidor.
+    Clientes usados no servidor.
 
-    Clientes como tv e android_vr não dependem
-    de cookies do navegador local.
-
-    web_embedded é usado como alternativa para
-    vídeos que permitem reprodução incorporada.
+    A ordem evita ficar insistindo
+    excessivamente no mesmo cliente.
     """
 
     return [
@@ -601,6 +661,81 @@ def client_plan(browser):
         "android_vr",
         "web_embedded"
     ]
+
+
+# ============================================================
+# CLASSIFICAÇÃO DE ERROS
+# ============================================================
+
+def classify_youtube_error(
+    error
+):
+
+    text = str(
+        error or ""
+    ).lower()
+
+    if (
+        "429" in text
+        or "too many requests" in text
+    ):
+
+        return "rate_limit"
+
+    if (
+        "sign in to confirm"
+        in text
+        or "not a bot"
+        in text
+        or "confirm you're not a bot"
+        in text
+        or "confirm you’re not a bot"
+        in text
+    ):
+
+        return "bot"
+
+    if (
+        "http error 403"
+        in text
+        or "403 forbidden"
+        in text
+    ):
+
+        return "forbidden"
+
+    if (
+        "private video"
+        in text
+        or "video unavailable"
+        in text
+    ):
+
+        return "unavailable"
+
+    if (
+        "age-restricted"
+        in text
+        or "age restricted"
+        in text
+    ):
+
+        return "age_restricted"
+
+    if (
+        "cookies"
+        in text
+        and (
+            "invalid"
+            in text
+            or "error"
+            in text
+        )
+    ):
+
+        return "cookies"
+
+    return "unknown"
 
 
 # ============================================================
@@ -634,13 +769,41 @@ def build_options(
 
         "no_warnings": False,
 
-        "retries": 3,
+        # ----------------------------------------------------
+        # TENTATIVAS
+        # ----------------------------------------------------
 
-        "fragment_retries": 3,
+        "retries": 2,
 
-        "file_access_retries": 3,
+        "fragment_retries": 2,
 
-        "extractor_retries": 3,
+        "file_access_retries": 2,
+
+        "extractor_retries": 2,
+
+        # ----------------------------------------------------
+        # REDE
+        # ----------------------------------------------------
+
+        "socket_timeout": 30,
+
+        "concurrent_fragment_downloads": 1,
+
+        # ----------------------------------------------------
+        # INTERVALOS
+        # ----------------------------------------------------
+
+        "sleep_interval_requests": 2,
+
+        "max_sleep_interval_requests": 5,
+
+        "sleep_interval": 2,
+
+        "max_sleep_interval": 5,
+
+        # ----------------------------------------------------
+        # ARQUIVO
+        # ----------------------------------------------------
 
         "continuedl": True,
 
@@ -652,22 +815,18 @@ def build_options(
 
         "restrictfilenames": False,
 
-        "socket_timeout": 30,
-
-        "concurrent_fragment_downloads": 1,
-
-        "sleep_interval_requests": 1,
-
-        "max_sleep_interval_requests": 3,
-
-        "sleep_interval": 1,
-
-        "max_sleep_interval": 3,
+        # ----------------------------------------------------
+        # FORMATO
+        # ----------------------------------------------------
 
         "format": format_selector(
             media,
             quality
         ),
+
+        # ----------------------------------------------------
+        # USER AGENT
+        # ----------------------------------------------------
 
         "http_headers": {
 
@@ -681,7 +840,12 @@ def build_options(
             ),
 
             "Accept-Language":
-                "pt-BR,pt;q=0.9,en;q=0.8"
+                "pt-BR,pt;q=0.9,en;q=0.8",
+
+            "Accept":
+                "text/html,application/xhtml+xml,"
+                "application/xml;q=0.9,"
+                "image/avif,image/webp,*/*;q=0.8"
         }
     }
 
@@ -689,21 +853,27 @@ def build_options(
     # DENO / EJS
     # ========================================================
 
-    deno = find_program("deno")
+    deno = find_program(
+        "deno"
+    )
 
     if deno:
 
         options["js_runtimes"] = {
+
             "deno": {
                 "path": deno
             }
+
         }
 
     # ========================================================
     # FFMPEG
     # ========================================================
 
-    ffmpeg = find_program("ffmpeg")
+    ffmpeg = find_program(
+        "ffmpeg"
+    )
 
     if ffmpeg:
 
@@ -724,7 +894,9 @@ def build_options(
                 "player_client": [
                     client
                 ]
+
             }
+
         }
 
     # ========================================================
@@ -735,10 +907,13 @@ def build_options(
 
     if cookies_file:
 
-        options["cookiefile"] = cookies_file
+        options["cookiefile"] = (
+            cookies_file
+        )
 
     # ========================================================
-    # COOKIES DO NAVEGADOR - SOMENTE LOCAL
+    # COOKIES DO NAVEGADOR
+    # SOMENTE LOCAL
     # ========================================================
 
     if (
@@ -779,7 +954,9 @@ def build_options(
 
     else:
 
-        options["merge_output_format"] = "mp4"
+        options["merge_output_format"] = (
+            "mp4"
+        )
 
         options["postprocessor_args"] = {
 
@@ -788,6 +965,7 @@ def build_options(
                 "-movflags",
                 "+faststart"
             ]
+
         }
 
     return options
@@ -809,9 +987,13 @@ def worker(
 
     try:
 
-        deno = find_program("deno")
+        deno = find_program(
+            "deno"
+        )
 
-        ffmpeg = find_program("ffmpeg")
+        ffmpeg = find_program(
+            "ffmpeg"
+        )
 
         cookies = prepare_cookies()
 
@@ -827,7 +1009,9 @@ def worker(
 
             eta="--",
 
-            message="Preparando download...",
+            message=(
+                "Preparando download..."
+            ),
 
             deno=bool(deno),
 
@@ -835,7 +1019,9 @@ def worker(
 
             cookies=bool(cookies),
 
-            yt_dlp=yt_dlp.version.__version__,
+            yt_dlp=(
+                yt_dlp.version.__version__
+            ),
 
             browser=browser
         )
@@ -847,7 +1033,8 @@ def worker(
         if not ffmpeg:
 
             raise RuntimeError(
-                "FFmpeg não foi encontrado no servidor."
+                "FFmpeg não foi encontrado "
+                "no servidor."
             )
 
         # ----------------------------------------------------
@@ -863,11 +1050,11 @@ def worker(
         # CLIENTES
         # ----------------------------------------------------
 
-        plans = client_plan(
-            browser
-        )
+        plans = client_plan()
 
         errors = []
+
+        blocked_by_youtube = False
 
         # ----------------------------------------------------
         # TENTATIVAS
@@ -887,11 +1074,15 @@ def worker(
                 percent=0,
 
                 message=(
-                    f"Tentativa {index}/"
-                    f"{len(plans)} — "
-                    f"cliente YouTube: {client} — "
-                    f"qualidade: {quality}"
-                )
+                    f"Tentativa "
+                    f"{index}/{len(plans)} — "
+                    f"cliente YouTube: "
+                    f"{client} — "
+                    f"qualidade: "
+                    f"{quality}"
+                ),
+
+                client=client
             )
 
             try:
@@ -927,7 +1118,10 @@ def worker(
                 # RESULTADO
                 # ------------------------------------------------
 
-                if result in (None, 0):
+                if result in (
+                    None,
+                    0
+                ):
 
                     files = [
 
@@ -975,28 +1169,81 @@ def worker(
 
                         eta="0s",
 
-                        filename=final_file.name,
+                        filename=(
+                            final_file.name
+                        ),
 
                         file_path=str(
                             final_file
                         ),
 
-                        message="Download concluído!",
+                        message=(
+                            "Download concluído!"
+                        ),
 
                         client=client
                     )
 
                     return
 
+                error_message = (
+                    f"{client}: "
+                    f"yt-dlp retornou "
+                    f"código {result}"
+                )
+
                 errors.append(
-                    f"{client}: código {result}"
+                    error_message
                 )
 
             except Exception as exc:
 
-                errors.append(
-                    f"{client}: {str(exc)}"
+                error_text = str(
+                    exc
                 )
+
+                errors.append(
+                    f"{client}: "
+                    f"{error_text}"
+                )
+
+                error_type = classify_youtube_error(
+                    error_text
+                )
+
+                # ------------------------------------------------
+                # 429 / ANTI-BOT
+                # ------------------------------------------------
+
+                if error_type in (
+                    "rate_limit",
+                    "bot"
+                ):
+
+                    blocked_by_youtube = True
+
+                    set_job(
+
+                        job_id,
+
+                        status="retrying",
+
+                        percent=0,
+
+                        speed="--",
+
+                        eta="--",
+
+                        message=(
+                            "O YouTube bloqueou "
+                            "temporariamente "
+                            "a requisição. "
+                            f"Testando o cliente "
+                            f"{client}..."
+                        ),
+
+                        error_type=error_type
+                    )
 
                 continue
 
@@ -1015,48 +1262,137 @@ def worker(
             "concluir o download."
         )
 
-        detail_lower = detail.lower()
+        detail_lower = (
+            detail.lower()
+        )
+
+        # ========================================================
+        # 429 / RATE LIMIT
+        # ========================================================
 
         if (
-            "429" in detail
-            or
-            "too many requests" in detail_lower
+            blocked_by_youtube
+            or "429" in detail_lower
+            or "too many requests"
+            in detail_lower
         ):
 
-            detail = (
+            if cookies:
 
-                "O YouTube limitou temporariamente "
-                "as requisições deste servidor (HTTP 429). "
-                "O Render está sendo identificado como "
-                "tráfego automatizado. "
-                "Se o problema persistir, configure "
-                "YOUTUBE_COOKIES ou YOUTUBE_COOKIES_B64 "
-                "nas variáveis de ambiente do serviço."
-            )
+                detail = (
+
+                    "O YouTube bloqueou "
+                    "temporariamente as "
+                    "requisições do servidor "
+                    "(HTTP 429). "
+                    "Os cookies estão configurados, "
+                    "mas o endereço do servidor "
+                    "continua sujeito ao limite "
+                    "anti-bot do YouTube. "
+                    "Tente novamente mais tarde."
+                )
+
+            else:
+
+                detail = (
+
+                    "O YouTube bloqueou "
+                    "temporariamente as "
+                    "requisições deste servidor "
+                    "(HTTP 429 / anti-bot). "
+                    "O Render está sendo identificado "
+                    "como tráfego automatizado. "
+                    "Configure YOUTUBE_COOKIES ou "
+                    "YOUTUBE_COOKIES_B64 nas "
+                    "variáveis de ambiente do Render "
+                    "e tente novamente."
+                )
+
+        # ========================================================
+        # BOT
+        # ========================================================
 
         elif (
-            "sign in to confirm" in detail_lower
-            or
-            "not a bot" in detail_lower
+            "sign in to confirm"
+            in detail_lower
+            or "not a bot"
+            in detail_lower
+            or "confirm you're not a bot"
+            in detail_lower
+            or "confirm you’re not a bot"
+            in detail_lower
         ):
 
             detail = (
 
-                "O YouTube solicitou autenticação "
-                "ou verificação anti-bot. "
-                "Configure os cookies do YouTube "
-                "no ambiente do Render."
+                "O YouTube solicitou uma "
+                "verificação anti-bot. "
+                "Configure cookies válidos "
+                "do YouTube através de "
+                "YOUTUBE_COOKIES ou "
+                "YOUTUBE_COOKIES_B64 "
+                "nas variáveis de ambiente "
+                "do Render."
             )
 
-        elif "403" in detail:
+        # ========================================================
+        # 403
+        # ========================================================
+
+        elif (
+            "403" in detail_lower
+        ):
 
             detail = (
 
-                "O YouTube recusou o arquivo "
-                "com HTTP 403. "
-                "O aplicativo tentou clientes "
-                "alternativos."
+                "O YouTube recusou a "
+                "requisição com HTTP 403. "
+                "O aplicativo tentou "
+                "clientes alternativos, "
+                "mas o servidor foi recusado."
             )
+
+        # ========================================================
+        # VÍDEO INDISPONÍVEL
+        # ========================================================
+
+        elif (
+            "video unavailable"
+            in detail_lower
+            or "private video"
+            in detail_lower
+        ):
+
+            detail = (
+
+                "O vídeo não está disponível "
+                "para download. "
+                "Ele pode ser privado, "
+                "removido ou restrito."
+            )
+
+        # ========================================================
+        # IDADE
+        # ========================================================
+
+        elif (
+            "age-restricted"
+            in detail_lower
+            or "age restricted"
+            in detail_lower
+        ):
+
+            detail = (
+
+                "O vídeo possui restrição "
+                "de idade e o YouTube "
+                "não permitiu o acesso "
+                "sem autenticação adequada."
+            )
+
+        # ========================================================
+        # COOKIES
+        # ========================================================
 
         elif (
             "cookies" in detail_lower
@@ -1065,9 +1401,13 @@ def worker(
 
             detail = (
 
-                "Não foi possível ler os cookies "
-                "do navegador local."
+                "Não foi possível utilizar "
+                "os cookies do navegador local."
             )
+
+        # ========================================================
+        # ERRO FINAL
+        # ========================================================
 
         set_job(
 
@@ -1081,7 +1421,9 @@ def worker(
 
             eta="--",
 
-            error=detail
+            error=detail,
+
+            error_detail=errors
         )
 
     except Exception as exc:
@@ -1118,16 +1460,26 @@ def index():
 # PASTA PADRÃO
 # ============================================================
 
-@app.get("/api/default-folder")
+@app.get(
+    "/api/default-folder"
+)
 def default_folder():
 
-    if os.environ.get("RENDER"):
+    if os.environ.get(
+        "RENDER"
+    ):
 
         return jsonify(
 
-            video="/tmp/Belfort Downloader",
+            video=(
+                "/tmp/"
+                "Belfort Downloader"
+            ),
 
-            audio="/tmp/Belfort Downloader"
+            audio=(
+                "/tmp/"
+                "Belfort Downloader"
+            )
 
         )
 
@@ -1151,18 +1503,25 @@ def default_folder():
 # ESCOLHER PASTA
 # ============================================================
 
-@app.post("/api/choose-folder")
+@app.post(
+    "/api/choose-folder"
+)
 def choose_folder():
 
-    if os.environ.get("RENDER"):
+    if os.environ.get(
+        "RENDER"
+    ):
 
         return jsonify(
 
             error=(
-                "O seletor de pastas funciona "
-                "somente na versão local. "
-                "No Render, o arquivo será preparado "
-                "temporariamente no servidor."
+                "O seletor de pastas "
+                "funciona somente na "
+                "versão local. "
+                "No Render, o arquivo "
+                "será preparado "
+                "temporariamente "
+                "no servidor."
             )
 
         ), 400
@@ -1175,7 +1534,9 @@ def choose_folder():
     )
 
     initial = (
-        data.get("initial")
+        data.get(
+            "initial"
+        )
         or str(Path.home())
     )
 
@@ -1188,7 +1549,8 @@ def choose_folder():
         return jsonify(
 
             error=(
-                "Nenhuma pasta foi escolhida."
+                "Nenhuma pasta "
+                "foi escolhida."
             )
 
         ), 400
@@ -1207,7 +1569,9 @@ def choose_folder():
 # INICIAR DOWNLOAD
 # ============================================================
 
-@app.post("/api/download")
+@app.post(
+    "/api/download"
+)
 def start_download():
 
     data = (
@@ -1218,7 +1582,9 @@ def start_download():
     )
 
     url = (
-        data.get("url")
+        data.get(
+            "url"
+        )
         or ""
     ).strip()
 
@@ -1240,7 +1606,9 @@ def start_download():
     )
 
     destination = (
-        data.get("destination")
+        data.get(
+            "destination"
+        )
         or ""
     ).strip()
 
@@ -1258,7 +1626,9 @@ def start_download():
     if not url:
 
         return jsonify(
-            error="Cole uma URL do YouTube."
+            error=(
+                "Cole uma URL do YouTube."
+            )
         ), 400
 
     if mode not in {
@@ -1267,7 +1637,9 @@ def start_download():
     }:
 
         return jsonify(
-            error="Tipo de conteúdo inválido."
+            error=(
+                "Tipo de conteúdo inválido."
+            )
         ), 400
 
     if media not in {
@@ -1276,38 +1648,50 @@ def start_download():
     }:
 
         return jsonify(
-            error="Formato inválido."
+            error=(
+                "Formato inválido."
+            )
         ), 400
 
     if (
         media == "video"
-        and quality not in VIDEO_QUALITIES
+        and quality
+        not in VIDEO_QUALITIES
     ):
 
         return jsonify(
-            error="Qualidade de vídeo inválida."
+            error=(
+                "Qualidade de vídeo inválida."
+            )
         ), 400
 
     if (
         media == "audio"
-        and quality not in AUDIO_QUALITIES
+        and quality
+        not in AUDIO_QUALITIES
     ):
 
         return jsonify(
-            error="Qualidade de áudio inválida."
+            error=(
+                "Qualidade de áudio inválida."
+            )
         ), 400
 
     if browser not in BROWSERS:
 
         return jsonify(
-            error="Navegador inválido."
+            error=(
+                "Navegador inválido."
+            )
         ), 400
 
     # --------------------------------------------------------
     # RENDER
     # --------------------------------------------------------
 
-    if os.environ.get("RENDER"):
+    if os.environ.get(
+        "RENDER"
+    ):
 
         browser = "none"
 
@@ -1317,14 +1701,19 @@ def start_download():
 
     try:
 
-        destination_path = resolve_destination(
-            destination
+        destination_path = (
+            resolve_destination(
+                destination
+            )
         )
 
     except Exception as exc:
 
         return jsonify(
-            error=f"Destino inválido: {exc}"
+            error=(
+                f"Destino inválido: "
+                f"{exc}"
+            )
         ), 400
 
     # --------------------------------------------------------
@@ -1351,7 +1740,9 @@ def start_download():
             destination_path
         ),
 
-        error=None
+        error=None,
+
+        error_type=None
     )
 
     # --------------------------------------------------------
@@ -1387,7 +1778,9 @@ def start_download():
 # PROGRESSO
 # ============================================================
 
-@app.get("/api/progress/<job_id>")
+@app.get(
+    "/api/progress/<job_id>"
+)
 def progress(job_id):
 
     job = get_job(
@@ -1401,7 +1794,9 @@ def progress(job_id):
         )
 
     return jsonify(
-        error="Download não encontrado."
+        error=(
+            "Download não encontrado."
+        )
     ), 404
 
 
@@ -1409,7 +1804,9 @@ def progress(job_id):
 # HEALTH CHECK
 # ============================================================
 
-@app.get("/api/health")
+@app.get(
+    "/api/health"
+)
 def health():
 
     deno = find_program(
@@ -1426,7 +1823,9 @@ def health():
 
         ok=True,
 
-        service="Belfort Downloader",
+        service=(
+            "Belfort Downloader"
+        ),
 
         yt_dlp=(
             yt_dlp.version.__version__
@@ -1436,14 +1835,22 @@ def health():
 
         ffmpeg=ffmpeg,
 
-        cookies=bool(cookies),
+        cookies=bool(
+            cookies
+        ),
 
-        deno_ok=bool(deno),
+        deno_ok=bool(
+            deno
+        ),
 
-        ffmpeg_ok=bool(ffmpeg),
+        ffmpeg_ok=bool(
+            ffmpeg
+        ),
 
         render=bool(
-            os.environ.get("RENDER")
+            os.environ.get(
+                "RENDER"
+            )
         )
     )
 
@@ -1452,7 +1859,9 @@ def health():
 # ENTREGAR ARQUIVO
 # ============================================================
 
-@app.get("/api/download-file/<job_id>")
+@app.get(
+    "/api/download-file/<job_id>"
+)
 def download_file(job_id):
 
     job = get_job(
@@ -1462,13 +1871,20 @@ def download_file(job_id):
     if not job:
 
         return jsonify(
-            error="Download não encontrado."
+            error=(
+                "Download não encontrado."
+            )
         ), 404
 
-    if job.get("status") != "completed":
+    if job.get(
+        "status"
+    ) != "completed":
 
         return jsonify(
-            error="O download ainda não terminou."
+            error=(
+                "O download ainda "
+                "não terminou."
+            )
         ), 400
 
     file_path = job.get(
@@ -1478,7 +1894,10 @@ def download_file(job_id):
     if not file_path:
 
         return jsonify(
-            error="Arquivo final não encontrado."
+            error=(
+                "Arquivo final "
+                "não encontrado."
+            )
         ), 404
 
     path = Path(
@@ -1491,7 +1910,10 @@ def download_file(job_id):
     ):
 
         return jsonify(
-            error="O arquivo não está mais disponível."
+            error=(
+                "O arquivo não está "
+                "mais disponível."
+            )
         ), 404
 
     return send_file(
@@ -1518,9 +1940,19 @@ if __name__ == "__main__":
     )
 
     print()
-    print("=" * 60)
-    print("                 BELFORT DOWNLOADER")
-    print("=" * 60)
+
+    print(
+        "=" * 60
+    )
+
+    print(
+        "                 "
+        "BELFORT DOWNLOADER"
+    )
+
+    print(
+        "=" * 60
+    )
 
     print(
         "yt-dlp :",
@@ -1529,21 +1961,27 @@ if __name__ == "__main__":
 
     print(
         "Deno   :",
-        find_program("deno")
+        find_program(
+            "deno"
+        )
         or "NÃO ENCONTRADO"
     )
 
     print(
         "FFmpeg :",
-        find_program("ffmpeg")
+        find_program(
+            "ffmpeg"
+        )
         or "NÃO ENCONTRADO"
     )
 
     print(
         "Cookies:",
-        "CONFIGURADOS"
-        if prepare_cookies()
-        else "NÃO CONFIGURADOS"
+        (
+            "CONFIGURADOS"
+            if prepare_cookies()
+            else "NÃO CONFIGURADOS"
+        )
     )
 
     print(
@@ -1551,12 +1989,19 @@ if __name__ == "__main__":
         port
     )
 
-    print("=" * 60)
+    print(
+        "=" * 60
+    )
+
     print()
 
     app.run(
+
         host="0.0.0.0",
+
         port=port,
+
         debug=False,
+
         threaded=True
     )
