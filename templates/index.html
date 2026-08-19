@@ -3,59 +3,710 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>BELFORT DOWNLOADER</title>
+
   <link rel="icon" href="/static/favicon.svg">
   <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
+
 <header>
-  <div class="brand"><b>B</b><span><strong>BELFORT</strong><small>DOWNLOADER</small></span></div>
-  <button id="theme" class="icon-btn" title="Alternar tema">☀️</button>
+  <div class="brand">
+    <b>B</b>
+
+    <span>
+      <strong>BELFORT</strong>
+      <small>DOWNLOADER</small>
+    </span>
+  </div>
+
+  <button
+    id="theme"
+    class="icon-btn"
+    title="Alternar tema"
+    type="button"
+  >
+    ☀️
+  </button>
 </header>
 
+
 <main>
+
+  <!-- =========================================================
+       CABEÇALHO
+  ========================================================== -->
+
   <section class="hero">
-    <div class="eyebrow">DOWNLOAD CENTER</div>
-    <h1>Seu conteúdo. Sua pasta. Sua qualidade.</h1>
-    <p>Baixe vídeos ou áudio com controle de qualidade, destino personalizado e tratamento inteligente de links com playlist.</p>
+
+    <div class="eyebrow">
+      DOWNLOAD CENTER
+    </div>
+
+    <h1>
+      Seu conteúdo. Sua qualidade.
+    </h1>
+
+    <p>
+      Baixe vídeos ou áudio com controle de qualidade,
+      formato e processamento inteligente.
+    </p>
+
   </section>
 
+
+  <!-- =========================================================
+       01 - ORIGEM
+  ========================================================== -->
+
   <section class="card">
-    <div class="section-title"><span class="step">01</span><div><small>ORIGEM</small><h2>Link do YouTube</h2></div></div>
-    <label for="url">URL</label>
-    <div class="row"><input id="url" autocomplete="off" placeholder="https://www.youtube.com/watch?v=..."><button id="paste" class="secondary">Colar</button></div>
+
+    <div class="section-title">
+
+      <span class="step">
+        01
+      </span>
+
+      <div>
+        <small>ORIGEM</small>
+
+        <h2>
+          Link do YouTube
+        </h2>
+      </div>
+
+    </div>
+
+
+    <label for="url">
+      URL
+    </label>
+
+
+    <div class="row">
+
+      <input
+        id="url"
+        type="url"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="https://www.youtube.com/watch?v=..."
+      >
+
+      <button
+        id="paste"
+        class="secondary"
+        type="button"
+      >
+        Colar
+      </button>
+
+    </div>
+
 
     <div class="grid">
-      <div><label for="mode">Conteúdo</label><select id="mode"><option value="single">Somente este vídeo</option><option value="playlist">Playlist / mix</option></select></div>
-      <div><label for="media">Formato</label><select id="media"><option value="video">Vídeo MP4</option><option value="audio">Áudio MP3</option></select></div>
-      <div><label for="quality">Qualidade</label><select id="quality"></select></div>
+
+      <!-- CONTEÚDO -->
+
+      <div>
+
+        <label for="mode">
+          Conteúdo
+        </label>
+
+        <select id="mode">
+
+          <option value="single">
+            Somente este vídeo
+          </option>
+
+          <option value="playlist">
+            Playlist / mix
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- FORMATO -->
+
+      <div>
+
+        <label for="media">
+          Formato
+        </label>
+
+        <select id="media">
+
+          <option value="video">
+            Vídeo MP4
+          </option>
+
+          <option value="audio">
+            Áudio MP3
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- QUALIDADE -->
+
+      <div>
+
+        <label for="quality">
+          Qualidade
+        </label>
+
+        <select id="quality">
+
+          <!--
+            O JavaScript poderá substituir
+            estas opções conforme o formato.
+          -->
+
+        </select>
+
+      </div>
+
     </div>
+
   </section>
 
-  <section class="card">
-    <div class="section-title"><span class="step">02</span><div><small>DESTINO</small><h2>Onde salvar?</h2></div></div>
-    <label for="dest">Pasta de destino</label>
-    <div class="row"><input id="dest" placeholder="/home/usuario/Vídeos/Belfort Downloader"><button id="choose" class="secondary">Escolher pasta</button><button id="default" class="ghost">Padrão</button></div>
-    <p class="hint">No Linux, o botão abre o seletor nativo do KDE/GTK quando disponível.</p>
+
+
+  <!-- =========================================================
+       02 - DESTINO
+  ========================================================== -->
+
+  <section
+    id="destinationCard"
+    class="card"
+  >
+
+    <div class="section-title">
+
+      <span class="step">
+        02
+      </span>
+
+      <div>
+
+        <small>DESTINO</small>
+
+        <h2>
+          Onde salvar?
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <!--
+      LOCALMENTE:
+      o usuário pode escolher uma pasta.
+
+      NO RENDER:
+      o arquivo será entregue automaticamente
+      para download pelo navegador.
+    -->
+
+    <div id="localDestination">
+
+      <label for="dest">
+        Pasta de destino
+      </label>
+
+      <div class="row">
+
+        <input
+          id="dest"
+          autocomplete="off"
+          placeholder="/home/usuario/Vídeos/Belfort Downloader"
+        >
+
+        <button
+          id="choose"
+          class="secondary"
+          type="button"
+        >
+          Escolher pasta
+        </button>
+
+        <button
+          id="default"
+          class="ghost"
+          type="button"
+        >
+          Padrão
+        </button>
+
+      </div>
+
+      <p class="hint">
+        No Linux, o botão abre o seletor nativo do KDE/GTK quando disponível.
+      </p>
+
+    </div>
+
+
+    <!--
+      MENSAGEM EXIBIDA NO RENDER
+    -->
+
+    <div
+      id="renderDestination"
+      class="hidden"
+    >
+
+      <p class="hint">
+        ☁️ O arquivo será processado no servidor e,
+        quando terminar, ficará disponível para download
+        diretamente pelo seu navegador.
+      </p>
+
+    </div>
+
   </section>
 
-  <section class="card">
-    <div class="section-title"><span class="step">03</span><div><small>CONEXÃO</small><h2>Opções de acesso</h2></div></div>
-    <label class="check"><input type="checkbox" id="useBrowser"><span>Usar sessão do navegador</span></label>
-    <div id="browserWrap" class="browser-wrap hidden"><label for="browser">Navegador</label><select id="browser"><option value="chrome">Chrome</option><option value="chromium">Chromium</option><option value="firefox">Firefox</option><option value="brave">Brave</option><option value="edge">Edge</option></select><p class="hint">Os cookies são lidos localmente pelo yt-dlp e não são enviados para o BELFORT DOWNLOADER.</p></div>
+
+
+  <!-- =========================================================
+       03 - CONEXÃO
+  ========================================================== -->
+
+  <section
+    id="connectionCard"
+    class="card"
+  >
+
+    <div class="section-title">
+
+      <span class="step">
+        03
+      </span>
+
+      <div>
+
+        <small>CONEXÃO</small>
+
+        <h2>
+          Opções de acesso
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <!--
+      Essa opção funciona apenas quando o programa
+      está rodando localmente.
+
+      No Render o servidor não consegue acessar
+      os cookies do navegador do usuário.
+    -->
+
+    <div id="browserOption">
+
+      <label class="check">
+
+        <input
+          type="checkbox"
+          id="useBrowser"
+        >
+
+        <span>
+          Usar sessão do navegador
+        </span>
+
+      </label>
+
+
+      <div
+        id="browserWrap"
+        class="browser-wrap hidden"
+      >
+
+        <label for="browser">
+          Navegador
+        </label>
+
+        <select id="browser">
+
+          <option value="chrome">
+            Chrome
+          </option>
+
+          <option value="chromium">
+            Chromium
+          </option>
+
+          <option value="firefox">
+            Firefox
+          </option>
+
+          <option value="brave">
+            Brave
+          </option>
+
+          <option value="edge">
+            Edge
+          </option>
+
+        </select>
+
+
+        <p class="hint">
+
+          Os cookies são utilizados somente
+          quando o BELFORT DOWNLOADER está rodando
+          localmente no seu computador.
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- Mensagem para Render -->
+
+    <div
+      id="renderConnection"
+      class="hidden"
+    >
+
+      <p class="hint">
+
+        ☁️ Modo servidor ativo.
+        O download será processado pelo BELFORT DOWNLOADER
+        no Render.
+
+      </p>
+
+    </div>
+
   </section>
 
-  <button id="download" class="primary">⬇ Iniciar download</button>
 
-  <section id="status" class="card hidden">
-    <div class="head"><div><small>DOWNLOAD</small><h2 id="state">Preparando...</h2></div><strong id="percent">0%</strong></div>
-    <div class="track"><div id="bar"></div></div>
-    <div class="stats"><div>Velocidade<strong id="speed">--</strong></div><div>ETA<strong id="eta">--</strong></div><div>Arquivo<strong id="file">--</strong></div></div>
+
+  <!-- =========================================================
+       BOTÃO PRINCIPAL
+  ========================================================== -->
+
+  <button
+    id="download"
+    class="primary"
+    type="button"
+  >
+
+    <span id="downloadIcon">
+      ⬇
+    </span>
+
+    <span id="downloadText">
+      Iniciar download
+    </span>
+
+  </button>
+
+
+
+  <!-- =========================================================
+       STATUS DO DOWNLOAD
+  ========================================================== -->
+
+  <section
+    id="status"
+    class="card hidden"
+  >
+
+    <div class="head">
+
+      <div>
+
+        <small>
+          DOWNLOAD
+        </small>
+
+        <h2 id="state">
+          Preparando...
+        </h2>
+
+      </div>
+
+      <strong id="percent">
+        0%
+      </strong>
+
+    </div>
+
+
+    <!-- BARRA -->
+
+    <div class="track">
+
+      <div
+        id="bar"
+        style="width:0%"
+      ></div>
+
+    </div>
+
+
+    <!-- ESTATÍSTICAS -->
+
+    <div class="stats">
+
+      <div>
+        Velocidade
+
+        <strong id="speed">
+          --
+        </strong>
+      </div>
+
+
+      <div>
+        ETA
+
+        <strong id="eta">
+          --
+        </strong>
+      </div>
+
+
+      <div>
+        Arquivo
+
+        <strong id="file">
+          --
+        </strong>
+      </div>
+
+    </div>
+
+
     <p id="msg"></p>
+
+
+    <!-- =======================================================
+         ÁREA DE CONCLUSÃO
+    ======================================================== -->
+
+    <div
+      id="completedArea"
+      class="hidden"
+    >
+
+      <button
+        id="downloadFile"
+        class="primary"
+        type="button"
+      >
+        ⬇ Baixar arquivo
+      </button>
+
+    </div>
+
+
+    <!-- =======================================================
+         ERRO
+    ======================================================== -->
+
+    <div
+      id="errorArea"
+      class="hidden"
+    >
+
+      <p
+        id="errorMessage"
+        class="error"
+      ></p>
+
+    </div>
+
   </section>
 
-  <div class="features"><div>⚡<span>Progresso em tempo real</span></div><div>🎬<span>Até 4K quando disponível</span></div><div>🎵<span>MP3 128–320 kbps</span></div><div>📁<span>Seletor de pasta nativo</span></div></div>
+
+
+  <!-- =========================================================
+       RECURSOS
+  ========================================================== -->
+
+  <div class="features">
+
+    <div>
+      ⚡
+      <span>
+        Progresso em tempo real
+      </span>
+    </div>
+
+
+    <div>
+      🎬
+      <span>
+        Até 4K quando disponível
+      </span>
+    </div>
+
+
+    <div>
+      🎵
+      <span>
+        MP3 128–320 kbps
+      </span>
+    </div>
+
+
+    <div>
+      ☁️
+      <span>
+        Download pelo navegador
+      </span>
+    </div>
+
+  </div>
+
 </main>
+
+
+<!-- ===========================================================
+     JAVASCRIPT
+=========================================================== -->
+
 <script src="/static/app.js"></script>
+
+
+<!-- ===========================================================
+     PEQUENO CONTROLE DO MODO RENDER
+=========================================================== -->
+
+<script>
+
+(async function detectarAmbiente() {
+
+  try {
+
+    /*
+     * O endpoint /api/health existe no app.py.
+     * Tentamos descobrir se estamos rodando no Render.
+     */
+
+    const response = await fetch("/api/health", {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data = await response.json();
+
+    /*
+     * Render normalmente disponibiliza
+     * a variável de ambiente RENDER no servidor.
+     *
+     * Como essa variável não é enviada ao navegador,
+     * usamos também o hostname.
+     */
+
+    const isRender =
+      window.location.hostname.endsWith(".onrender.com");
+
+
+    if (!isRender) {
+      return;
+    }
+
+
+    /* ========================================================
+       MODO RENDER
+    ========================================================= */
+
+
+    const localDestination =
+      document.getElementById("localDestination");
+
+    const renderDestination =
+      document.getElementById("renderDestination");
+
+
+    const browserOption =
+      document.getElementById("browserOption");
+
+    const renderConnection =
+      document.getElementById("renderConnection");
+
+
+    /*
+     * Esconde seleção de pasta local.
+     */
+
+    if (localDestination) {
+      localDestination.classList.add("hidden");
+    }
+
+
+    /*
+     * Mostra mensagem de download pelo navegador.
+     */
+
+    if (renderDestination) {
+      renderDestination.classList.remove("hidden");
+    }
+
+
+    /*
+     * Esconde cookies do navegador.
+     */
+
+    if (browserOption) {
+      browserOption.classList.add("hidden");
+    }
+
+
+    /*
+     * Mostra mensagem de modo servidor.
+     */
+
+    if (renderConnection) {
+      renderConnection.classList.remove("hidden");
+    }
+
+
+    /*
+     * Não precisamos enviar uma pasta local
+     * para o servidor.
+     */
+
+    const dest =
+      document.getElementById("dest");
+
+    if (dest) {
+      dest.value = "";
+    }
+
+
+  } catch (error) {
+
+    console.warn(
+      "Não foi possível detectar o ambiente:",
+      error
+    );
+
+  }
+
+})();
+
+</script>
+
 </body>
 </html>

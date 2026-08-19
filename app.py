@@ -52,16 +52,42 @@ def find_program(name):
 
 
 def resolve_destination(value):
+    """
+    Define onde os arquivos serão salvos.
+
+    No Render:
+    - Cada usuário usa uma pasta temporária própria.
+    - O usuário NÃO pode escolher uma pasta do computador dele.
+    - O arquivo será disponibilizado para download pelo navegador.
+
+    Localmente:
+    - Continua permitindo escolher uma pasta normalmente.
+    """
+
+    # Render = ambiente hospedado
+    if os.environ.get("RENDER"):
+        path = DOWNLOAD_ROOT / uuid.uuid4().hex
+        path.mkdir(parents=True, exist_ok=True)
+        return path.resolve()
+
+    # Execução local
     value = (value or "").strip()
+
     if not value:
         raise ValueError("Escolha uma pasta de destino.")
 
-    path = Path(os.path.expandvars(os.path.expanduser(value)))
+    path = Path(
+        os.path.expandvars(
+            os.path.expanduser(value)
+        )
+    )
+
     if not path.is_absolute():
         path = DOWNLOAD_ROOT / path
-    path.mkdir(parents=True, exist_ok=True)
-    return path.resolve()
 
+    path.mkdir(parents=True, exist_ok=True)
+
+    return path.resolve()
 
 def choose_folder_native(initial=""):
     """Abre um seletor de pasta no Linux. Não usa upload de arquivos pelo navegador."""
