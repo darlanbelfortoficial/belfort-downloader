@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BELFORT DOWNLOADER</title>
+  <link rel="icon" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="brand"><b>B</b><span><strong>BELFORT</strong><small>DOWNLOADER</small></span></div>
+  <button id="theme" class="icon-btn" title="Alternar tema">☀️</button>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">DOWNLOAD CENTER</div>
+    <h1>Seu conteúdo. Sua pasta. Sua qualidade.</h1>
+    <p>Baixe vídeos ou áudio com controle de qualidade, destino personalizado e tratamento inteligente de links com playlist.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-title"><span class="step">01</span><div><small>ORIGEM</small><h2>Link do YouTube</h2></div></div>
+    <label for="url">URL</label>
+    <div class="row"><input id="url" autocomplete="off" placeholder="https://www.youtube.com/watch?v=..."><button id="paste" class="secondary">Colar</button></div>
+
+    <div class="grid">
+      <div><label for="mode">Conteúdo</label><select id="mode"><option value="single">Somente este vídeo</option><option value="playlist">Playlist / mix</option></select></div>
+      <div><label for="media">Formato</label><select id="media"><option value="video">Vídeo MP4</option><option value="audio">Áudio MP3</option></select></div>
+      <div><label for="quality">Qualidade</label><select id="quality"></select></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="section-title"><span class="step">02</span><div><small>DESTINO</small><h2>Onde salvar?</h2></div></div>
+    <label for="dest">Pasta de destino</label>
+    <div class="row"><input id="dest" placeholder="/home/usuario/Vídeos/Belfort Downloader"><button id="choose" class="secondary">Escolher pasta</button><button id="default" class="ghost">Padrão</button></div>
+    <p class="hint">No Linux, o botão abre o seletor nativo do KDE/GTK quando disponível.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-title"><span class="step">03</span><div><small>CONEXÃO</small><h2>Opções de acesso</h2></div></div>
+    <label class="check"><input type="checkbox" id="useBrowser"><span>Usar sessão do navegador</span></label>
+    <div id="browserWrap" class="browser-wrap hidden"><label for="browser">Navegador</label><select id="browser"><option value="chrome">Chrome</option><option value="chromium">Chromium</option><option value="firefox">Firefox</option><option value="brave">Brave</option><option value="edge">Edge</option></select><p class="hint">Os cookies são lidos localmente pelo yt-dlp e não são enviados para o BELFORT DOWNLOADER.</p></div>
+  </section>
+
+  <button id="download" class="primary">⬇ Iniciar download</button>
+
+  <section id="status" class="card hidden">
+    <div class="head"><div><small>DOWNLOAD</small><h2 id="state">Preparando...</h2></div><strong id="percent">0%</strong></div>
+    <div class="track"><div id="bar"></div></div>
+    <div class="stats"><div>Velocidade<strong id="speed">--</strong></div><div>ETA<strong id="eta">--</strong></div><div>Arquivo<strong id="file">--</strong></div></div>
+    <p id="msg"></p>
+  </section>
+
+  <div class="features"><div>⚡<span>Progresso em tempo real</span></div><div>🎬<span>Até 4K quando disponível</span></div><div>🎵<span>MP3 128–320 kbps</span></div><div>📁<span>Seletor de pasta nativo</span></div></div>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
